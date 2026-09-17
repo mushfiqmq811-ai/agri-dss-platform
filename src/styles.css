@@ -1,0 +1,40 @@
+:root {
+  --primary-green: #1e4620;
+  --light-bg: #f8faf9;
+  --text-main: #1f2937;
+  --border-color: #e5e7eb;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-main);
+}
+
+.app-header {
+  background-color: var(--primary-green);
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.metric-val {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: #15803d;
+}
