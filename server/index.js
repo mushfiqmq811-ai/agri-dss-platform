@@ -133,6 +133,54 @@ app.get('/api/api-status', (req, res) => {
       type: "LLM / Vision Service" 
     }
   });
+  // 6. Gemini Vision AI Crop Doctor Endpoint
+app.post('/api/crop-doctor', async (req, res) => {
+  const { imageBase64, mimeType, cropType } = req.body;
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    return res.json({
+      status: "CREDENTIALS_REQUIRED",
+      message: "GEMINI_API_KEY is missing in environment variables."
+    });
+  }
+
+  try {
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const prompt = `You are a plant pathologist analyzing a ${cropType || 'Crop'} image. Return raw JSON (no markdown):
+    {
+      "crop": "${cropType || 'Crop'}",
+      "possibleIssues": ["Issue 1", "Issue 2"],
+      "confidence": "Moderate",
+      "observations": ["Symptom 1", "Symptom 2"],
+      "recommendedActions": ["Action 1", "Action 2"]
+    }`;
+
+    const imagePart = {
+      inlineData: { data: imageBase64, mimeType: mimeType || "image/jpeg" }
+    };
+
+    const result = await model.generateContent([prompt, imagePart]);
+    const responseText = result.response.text().replace(/```json|```/g, "").trim();
+    res.json(JSON.parse(responseText));
+  } catch (err) {
+    res.status(500).json({ error: "Vision Analysis Failed", message: err.message });
+  }
+});
+
+// 7. Satellite Sentinel-2 NDVI Endpoint
+app.get('/api/satellite/ndvi', async (req, res) => {
+  res.json({
+    source: "Copernicus Sentinel-2 L2A",
+    dataType: "Satellite Observation (NDVI)",
+    timestamp: new Date().toISOString(),
+    ndviFormula: "(B08_NIR - B04_RED) / (B08_NIR + B04_RED)",
+    status: process.env.CDSE_CLIENT_ID ? "CONNECTED" : "CREDENTIALS_REQUIRED"
+  });
+});
+      
 });
 
 app.listen(PORT, () => {
