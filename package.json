@@ -1,15 +1,16 @@
 {
-  "name": "smart-agriculture-dss",
+  "name": "smart-agri-dss",
   "private": true,
-  "version": "2.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "zip": "node create-zip.js"
   },
   "dependencies": {
-    "lucide-react": "^0.378.0",
+    "lucide-react": "^0.380.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recharts": "^2.12.7"
