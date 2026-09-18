@@ -1,0 +1,5 @@
+import React from 'react';
+export default function RiskOutlook(){
+ const risks=[['Days 1–5','LOW','12%','Low','Monitor routine field conditions.'],['Days 6–10','MODERATE','48%','Medium','Monitor rainfall and humidity; verify local forecasts.'],['Days 11–15','HIGH','75%','High','Treat as an early-warning scenario, not a confirmed event.']];
+ return <div className="page"><section className="panel"><span className="eyebrow">EARLY WARNING</span><h2>⚠️ 15-Day Risk Outlook</h2><p className="muted">The current cards are demonstration logic, not a live trained Random Forest prediction. Production use requires a validated model and historical/local data.</p><div className="risk-grid">{risks.map(([period,level,flood,pest,advice])=><article className={`risk-card ${level.toLowerCase()}`} key={period}><div className="risk-top"><b>{period}</b><span>{level}</span></div><p>🌊 Flood probability: <strong>{flood}</strong></p><p>🐛 Pest/disease signal: <strong>{pest}</strong></p><small>💡 {advice}</small></article>)}</div></section></div>
+}
